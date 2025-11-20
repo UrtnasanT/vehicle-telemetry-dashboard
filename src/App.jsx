@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import PerformanceView from "./components/PerformanceView";
 
 function App() {
   const [view, setView] = useState("performance");
@@ -8,7 +9,7 @@ function App() {
   const renderContent = () => {
     switch (view) {
       case "performance":
-        return <div>Performance View Coming Soon</div>;
+        return <PerformanceView />;
       case "maintenance":
         return <div>Maintenance Panel Coming Soon</div>;
       case "ai":

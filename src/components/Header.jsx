@@ -1,33 +1,45 @@
-import React from 'react';
+import React from "react";
 
-const Header = () => {
+const Sidebar = ({ onSelect }) => {
   return (
-    <header style={styles.header}>
-      <h1 style={styles.title}>Digital Pit Crew</h1>
-    </header>
+    <aside style={styles.sidebar}>
+      <nav>
+        <ul style={styles.navList}>
+          <li style={styles.navItem} onClick={() => onSelect("performance")}>
+            Performance View
+          </li>
+          <li style={styles.navItem} onClick={() => onSelect("maintenance")}>
+            Maintenance Panel
+          </li>
+          <li style={styles.navItem} onClick={() => onSelect("ai")}>
+            AI Advisor
+          </li>
+        </ul>
+      </nav>
+    </aside>
   );
 };
 
 const styles = {
-  header: {
-    height: '60px',
-    backgroundColor: '#111',
-    color: '#fff',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 20px',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    position: 'fixed',
+  sidebar: {
+    width: "220px",
+    backgroundColor: "#1b1b1b",
+    color: "#fff",
+    height: "100vh",
+    paddingTop: "60px", // push below header
+    position: "fixed",
     top: 0,
     left: 0,
-    right: 0,
-    zIndex: 1000,
   },
-  title: {
-    margin: 0,
-    fontSize: '1.5rem',
-    fontFamily: 'monospace',
+  navList: {
+    listStyle: "none",
+    padding: 0,
+  },
+  navItem: {
+    padding: "15px 20px",
+    cursor: "pointer",
+    fontFamily: "monospace",
   },
 };
 
-export default Header;
+export default Sidebar;
