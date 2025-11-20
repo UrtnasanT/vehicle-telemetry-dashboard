@@ -1,2 +1,31 @@
+/* Reset browser defaults */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: monospace;
+  background-color: #121212;
+  color: #fff;
+}
+
+/* Reset main element */
 main {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Scrollbar styling (optional, for high-tech look) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #00ffcc;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background-color: #1b1b1b;
 }

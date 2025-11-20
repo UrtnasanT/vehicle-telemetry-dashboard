@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import MaintenancePanel from "./components/MaintenancePanel";
-
+import AIAdvisor from "./components/AIAdvisor";
 import PerformanceView from "./components/PerformanceView";
+import Login from "./components/Login";
+
+import "./components/App.css";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [view, setView] = useState("performance");
 
   const renderContent = () => {
@@ -15,28 +19,29 @@ function App() {
       case "maintenance":
         return <MaintenancePanel />;
       case "ai":
-        return <div>AI Advisor Coming Soon</div>;
+        return <AIAdvisor />;
       default:
         return <div>Select a view</div>;
     }
   };
+  if (!loggedIn) return <Login onLogin={() => setLoggedIn(true)} />;
 
   return (
-    <div style={{ display: "flex" }}>
+    <div
+      style={{ display: "flex", height: "100vh", backgroundColor: "#121212" }}
+    >
       <Sidebar onSelect={setView} />
       <div
         style={{
-          marginLeft: "220px",
-          paddingTop: "60px",
-          width: "100%",
-          minHeight: "100vh",
-          backgroundColor: "#121212",
-          color: "#fff",
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          overflowY: "auto",
           padding: "20px",
         }}
       >
         <Header />
-        {renderContent()}
+        <main>{renderContent()}</main>
       </div>
     </div>
   );

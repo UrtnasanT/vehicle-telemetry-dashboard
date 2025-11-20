@@ -3,17 +3,14 @@ import telemetryData from "../data/telemetryData";
 
 const MaintenancePanel = () => {
   const [selectedLap, setSelectedLap] = useState("lap1");
-
   const data = telemetryData[selectedLap];
-
-  // Calculate if warning needed based on g_force
   const maxGForce = Math.max(...data.map((d) => d.g_force));
+
   const warningMessage =
     maxGForce > 1.5
       ? "Tire/Suspension Inspection Recommended"
       : "All Systems Green";
 
-  // Mock Diagnostic Trouble Codes (DTC)
   const dtcList = [
     {
       code: "P0300",
@@ -32,7 +29,6 @@ const MaintenancePanel = () => {
     },
   ];
 
-  // Simulate report download
   const downloadReport = () => {
     const report = {
       lap: selectedLap,
@@ -52,8 +48,6 @@ const MaintenancePanel = () => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Maintenance Panel</h2>
-
       {/* Lap Selector */}
       <div style={styles.lapSelector}>
         {["lap1", "lap2", "average"].map((lap) => (
@@ -71,7 +65,7 @@ const MaintenancePanel = () => {
         ))}
       </div>
 
-      {/* Warning Message */}
+      {/* Warning */}
       <div
         style={{
           ...styles.warningBox,
@@ -103,7 +97,6 @@ const MaintenancePanel = () => {
         </tbody>
       </table>
 
-      {/* Download Button */}
       <button style={styles.downloadButton} onClick={downloadReport}>
         Download Diagnostic Report
       </button>
@@ -113,25 +106,20 @@ const MaintenancePanel = () => {
 
 const styles = {
   container: {
-    backgroundColor: "#121212",
-    padding: "20px",
-    borderRadius: "10px",
+    maxWidth: "800px",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     color: "#fff",
     fontFamily: "monospace",
   },
-  title: {
-    marginBottom: "15px",
-  },
-  lapSelector: {
-    display: "flex",
-    gap: "10px",
-    marginBottom: "20px",
-  },
+  lapSelector: { display: "flex", gap: "10px", marginBottom: "20px" },
   button: {
     padding: "10px 20px",
     border: "none",
-    cursor: "pointer",
     borderRadius: "5px",
+    cursor: "pointer",
     fontWeight: "bold",
   },
   warningBox: {
@@ -140,21 +128,11 @@ const styles = {
     marginBottom: "20px",
     fontWeight: "bold",
     textAlign: "center",
-  },
-  table: {
     width: "100%",
-    borderCollapse: "collapse",
-    marginBottom: "20px",
   },
-  th: {
-    borderBottom: "1px solid #555",
-    padding: "10px",
-    textAlign: "left",
-  },
-  td: {
-    borderBottom: "1px solid #333",
-    padding: "10px",
-  },
+  table: { width: "100%", borderCollapse: "collapse", marginBottom: "20px" },
+  th: { borderBottom: "1px solid #555", padding: "10px", textAlign: "left" },
+  td: { borderBottom: "1px solid #333", padding: "10px" },
   downloadButton: {
     padding: "12px 25px",
     backgroundColor: "#00ffcc",
