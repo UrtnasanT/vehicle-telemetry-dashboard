@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import MaintenancePanel from "./components/MaintenancePanel";
+
 import PerformanceView from "./components/PerformanceView";
 
 function App() {
@@ -11,7 +13,7 @@ function App() {
       case "performance":
         return <PerformanceView />;
       case "maintenance":
-        return <div>Maintenance Panel Coming Soon</div>;
+        return <MaintenancePanel />;
       case "ai":
         return <div>AI Advisor Coming Soon</div>;
       default:
