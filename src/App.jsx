@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import VehicleComparison from "./components/VehicleComparison";
 import MaintenancePanel from "./components/MaintenancePanel";
 import AIPitCrew from "./components/AIAdvisor";
 import PerformanceView from "./components/PerformanceView";
 import Login from "./components/Login";
-
 import "./components/App.css";
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
         return <div>Select a view</div>;
     }
   };
+
   if (!loggedIn) return <Login onLogin={() => setLoggedIn(true)} />;
 
   return (

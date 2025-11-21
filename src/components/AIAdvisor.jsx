@@ -74,7 +74,7 @@ const AIPitCrew = ({ telemetry }) => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.header1}>AI Advisor</h2>
+      <h2 style={styles.header}>AI Advisor</h2>
       <div style={styles.sidebar}>
         <div style={styles.header}>AI Pit Crew Chief</div>
         <div ref={messagesRef} style={styles.messages}>
@@ -140,10 +140,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "40px",
-  },
-  header1: {
-    marginBottom: "15px",
-    color: "#00ffcc",
   },
   header: {
     fontSize: "1.5rem",
