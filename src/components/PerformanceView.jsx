@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -9,18 +9,40 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import telemetryData from "../data/telemetryData";
+import RPMGauge from "./RPMGaug";
 
 const PerformanceView = () => {
   const [selectedLap, setSelectedLap] = useState("lap1");
-  const data = telemetryData[selectedLap];
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const currentRPM = data[data.length - 1].rpm;
+  // Always pull the current lap data
+  const data = telemetryData[selectedLap] || [];
+
+  useEffect(() => {
+    // Reset to start when lap changes
+    setCurrentIndex(0);
+
+    // Animate through all points every second
+    const interval = setInterval(() => {
+      setCurrentIndex((i) => {
+        // Stop at last point
+        if (i >= data.length - 1) return i;
+        return i + 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [selectedLap, data.length]);
+
+  // Current RPM from the animated index
+  const currentRPM = data[currentIndex]?.rpm || 0;
 
   return (
     <div style={styles.container}>
+      <h2 style={styles.header}>Performance Panel</h2>
       {/* Lap Selector */}
       <div style={styles.lapSelector}>
-        {["lap1", "lap2", "average"].map((lap) => (
+        {["lap1", "lap2", "averageLap"].map((lap) => (
           <button
             key={lap}
             onClick={() => setSelectedLap(lap)}
@@ -30,19 +52,22 @@ const PerformanceView = () => {
               color: selectedLap === lap ? "#000" : "#fff",
             }}
           >
-            {lap.replace("lap", "Lap ")}
+            {lap === "averageLap" ? "Average Lap" : lap.replace("lap", "Lap ")}
           </button>
         ))}
       </div>
 
       {/* Line Chart */}
-      <div style={{ width: "100%", height: 300, marginBottom: "30px" }}>
+      <div style={{ width: "100%", height: 300, marginBottom: 30 }}>
         <ResponsiveContainer>
           <LineChart data={data}>
             <CartesianGrid stroke="#444" strokeDasharray="5 5" />
             <XAxis dataKey="time" stroke="#fff" />
             <YAxis stroke="#fff" />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{ backgroundColor: "#222", border: "none" }}
+              itemStyle={{ color: "#00ffcc" }}
+            />
             <Line
               type="monotone"
               dataKey="speed_kph"
@@ -54,9 +79,9 @@ const PerformanceView = () => {
         </ResponsiveContainer>
       </div>
 
-      {/* Circular Gauge */}
-      <div style={styles.gauge}>
-        <div style={styles.gaugeValue}>{currentRPM} RPM</div>
+      {/* RPM Gauge */}
+      <div style={{ width: "250px", height: "350px", marginTop: "20px" }}>
+        <RPMGauge rpm={currentRPM} />
       </div>
     </div>
   );
@@ -64,13 +89,18 @@ const PerformanceView = () => {
 
 const styles = {
   container: {
-    maxWidth: "800px",
-    width: "100%",
+    maxWidth: "900px",
+    margin: "0 auto",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     color: "#fff",
     fontFamily: "monospace",
+    padding: "20px",
+  },
+  header: {
+    marginBottom: "15px",
+    color: "#00ffcc",
   },
   lapSelector: {
     display: "flex",
@@ -80,23 +110,11 @@ const styles = {
   button: {
     padding: "10px 20px",
     border: "none",
-    borderRadius: "5px",
+    borderRadius: "6px",
     cursor: "pointer",
     fontWeight: "bold",
-  },
-  gauge: {
-    width: "150px",
-    height: "150px",
-    borderRadius: "50%",
-    border: "5px solid #00ffcc",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: "bold",
-    fontSize: "20px",
-  },
-  gaugeValue: {
-    textAlign: "center",
+    boxShadow: "0 0 8px rgba(0,255,204,0.5)",
+    transition: "all 0.2s ease",
   },
 };
 

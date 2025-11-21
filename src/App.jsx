@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import MaintenancePanel from "./components/MaintenancePanel";
-import AIAdvisor from "./components/AIAdvisor";
+import AIPitCrew from "./components/AIAdvisor";
 import PerformanceView from "./components/PerformanceView";
 import Login from "./components/Login";
 
@@ -19,7 +19,8 @@ function App() {
       case "maintenance":
         return <MaintenancePanel />;
       case "ai":
-        return <AIAdvisor />;
+        return <AIPitCrew />;
+
       default:
         return <div>Select a view</div>;
     }
